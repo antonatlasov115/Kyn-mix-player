@@ -313,16 +313,16 @@ class AudioManager {
             }
         }
 
-        // Commit all mods to derivation state
-        this.commitState();
-
-        const v0 = this.mods.c0Vol * masterVolume, v1 = this.mods.c1Vol * masterVolume;
-
         // CRITICAL: Block main loop from sending mixer commands if a transition is active
         if (this.transitionActive) {
             this._recordState();
             return;
         }
+
+        // Commit all mods to derivation state
+        this.commitState();
+
+        const v0 = this.mods.c0Vol * masterVolume, v1 = this.mods.c1Vol * masterVolume;
 
         this._applyIntelliGain(intelliGainEnabled, this.lastLevels, v0, v1);
 

@@ -12,10 +12,11 @@ node_modules/
 /core/**/Release/
 /core/**/*.user
 /core/**/*.suo
-/core/**/*.suo
 /core/**/.vs/
 /core/**/*.dll
 /core/**/*.lib
+!/core/**/bass.lib
+!/core/**/bass_vst.lib
 /core/**/*.pdb
 /core/**/*.exp
 /core/**/*.obj

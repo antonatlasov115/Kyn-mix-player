@@ -10,6 +10,8 @@ ipch/
 # Compiled binaries
 *.dll
 *.lib
+!bass.lib
+!bass_vst.lib
 *.pdb
 *.exp
 *.obj

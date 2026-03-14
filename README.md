@@ -1,8 +1,16 @@
-# <img src="ui/peerify/build/icon.png" width="48" align="center" /> Peerify
+# <img src="ui/peerify/build/icon.png" width="48" align="center" /> Күн микс
 
 **Advanced Audio Engine ➜ High-Performance Visualizer ➜ Intelligent Automix**
 
 Peerify is a next-generation desktop audio player built for power users, DJs, and audiophiles. It combines a high-performance C++ audio engine with a stunning, reactive Svelte-based interface to deliver a premium listening experience.
+
+## 📸 Gallery
+
+<div align="center">
+  <img src="src/Peerify%2014.03.2026%2021_05_47.png" width="30%" alt="Peerify Screenshot 1" />
+  <img src="src/Peerify%2014.03.2026%2021_05_53.png" width="30%" alt="Peerify Screenshot 2" />
+  <img src="src/Peerify%2014.03.2026%2021_05_57.png" width="30%" alt="Peerify Screenshot 3" />
+</div>
 
 ---
 

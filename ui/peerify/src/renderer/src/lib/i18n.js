@@ -497,7 +497,13 @@ export const translations = {
         refine_covers_msg: "Поиск обложек запущен...",
         collapse: "Свернуть",
         expand: "Развернуть",
-        minimize_sidebar: "Уменьшить сайдбар"
+        minimize_sidebar: "Уменьшить сайдбар",
+        active_tasks: "Активные задачи",
+        clear_finished: "Очистить завершенные",
+        no_downloads_yet: "Загрузок пока нет",
+        ready: "Готов",
+        confirm: "Подтвердить",
+        import_m3u: "Импорт M3U"
     },
     en: {
         settings: "Settings",
@@ -913,7 +919,13 @@ export const translations = {
         phase_correlation: "Phase Correlation",
         monitored: "Monitored",
         latency_compensation: "Latency Compensation",
-        active: "Active"
+        active: "Active",
+        active_tasks: "Active Tasks",
+        clear_finished: "Clear Finished",
+        no_downloads_yet: "No downloads yet",
+        ready: "Ready",
+        confirm: "Confirm",
+        import_m3u: "Import M3U"
     },
     ja: {
         settings: "設定",
@@ -1327,7 +1339,13 @@ export const translations = {
         bpm_house: "House / Disco",
         bpm_floor: "Main Floor",
         bpm_high: "High Energy",
-        bpm_hardcore: "Hardcore / DnB"
+        bpm_hardcore: "Hardcore / DnB",
+        active_tasks: "Active Tasks",
+        clear_finished: "Clear Finished",
+        no_downloads_yet: "No downloads yet",
+        ready: "Ready",
+        confirm: "Confirm",
+        import_m3u: "Import M3U"
     },
     zh: {
         settings: "设置",
@@ -1769,7 +1787,13 @@ export const translations = {
         hidden_tracks_desc: "部分曲目已丢失并被隐藏。重新添加文件夹后将恢复。",
         fx_settings_label: "音效设置",
         pitch_label: "音高",
-        reverb_label: "混响"
+        reverb_label: "混响",
+        active_tasks: "Active Tasks",
+        clear_finished: "Clear Finished",
+        no_downloads_yet: "No downloads yet",
+        ready: "Ready",
+        confirm: "Confirm",
+        import_m3u: "Import M3U"
     },
     sah: {
         settings: "Туруоруулар",
@@ -2258,7 +2282,13 @@ export const translations = {
         neural_engine: "НЕЙРО-ДВИЖОК",
         collapse: "Сыҕарыт",
         expand: "Тардыы",
-        minimize_sidebar: "Кыччат"
+        minimize_sidebar: "Кыччат",
+        active_tasks: "Active Tasks",
+        clear_finished: "Clear Finished",
+        no_downloads_yet: "No downloads yet",
+        ready: "Ready",
+        confirm: "Confirm",
+        import_m3u: "Import M3U"
     }
 };
 

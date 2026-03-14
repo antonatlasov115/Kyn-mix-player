@@ -224,7 +224,7 @@
     }
   }
 
-  function handleAddFolder() {
+  function handleLangChange(e) {
     locale.set(e.target.value)
   }
 

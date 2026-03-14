@@ -30,22 +30,6 @@
     return track.search_index?.includes(q)
   })
 
-  function handleMagneticMove(e) {
-    if (e.target.closest('button') || e.target.tagName === 'BUTTON') {
-      e.currentTarget.style.transform = 'translate(0, 0)'
-      return
-    }
-    const btn = e.currentTarget
-    const rect = btn.getBoundingClientRect()
-    const x = (e.clientX - rect.left - rect.width / 2) * 0.1
-    const y = (e.clientY - rect.top - rect.height / 2) * 0.1
-    btn.style.transform = `translate(${x}px, ${y}px)`
-  }
-
-  function handleMagneticOut(e) {
-    const btn = e.currentTarget
-    btn.style.transform = 'translate(0, 0)'
-  }
 </script>
 
 <div

@@ -94,7 +94,7 @@ npm run dev
 
 ## 🌑 Customization
 
-Peerify supports deep theming through CSS Variables. Check `src/renderer/src/App.svelte` and `index.css` to customize the primary accent glow and background palettes.
+kyn mix supports deep theming through CSS Variables. Check `src/renderer/src/App.svelte` and `index.css` to customize the primary accent glow and background palettes.
 
 ---
 

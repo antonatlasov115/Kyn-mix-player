@@ -1,0 +1,369 @@
+/**
+ * AutoMix Engine - Main Engine Implementation
+ */
+
+#include "engine.h"
+#include "../core/utils.h"
+#include <filesystem>
+#include <thread>
+#include <atomic>
+#include <mutex>
+
+namespace automix {
+
+Engine::Engine(const std::string& db_path)
+    : store_(std::make_unique<Store>(db_path))
+    , decoder_(std::make_unique<Decoder>())
+    , analyzer_(std::make_unique<Analyzer>())
+    , playlist_generator_(std::make_unique<PlaylistGenerator>())
+    , scheduler_(std::make_unique<Scheduler>())
+    , audio_output_(std::make_unique<AudioOutput>(sample_rate_)) {
+    
+    if (!store_->is_open()) {
+        last_error_ = "Failed to open database: " + store_->error();
+        return;
+    }
+    
+    // Setup track loader for scheduler
+    scheduler_->set_track_loader([this](int64_t track_id) {
+        return this->load_track_audio(track_id);
+    });
+    
+    // Setup audio output render callback -> calls scheduler render
+    audio_output_->set_render_callback([this](float* buffer, int frames) {
+        return this->render(buffer, frames);
+    });
+}
+
+Engine::~Engine() {
+    stop_audio();
+}
+
+bool Engine::is_valid() const {
+    return store_ && store_->is_open();
+}
+
+int Engine::scan(const std::string& music_dir, bool recursive, ScanCallback callback,
+                bool metadata_only) {
+    if (!is_valid()) {
+        last_error_ = "Engine not initialized";
+        return -1;
+    }
+    
+    std::filesystem::path dir_path(music_dir);
+    if (!std::filesystem::exists(dir_path)) {
+        last_error_ = "Directory does not exist: " + music_dir;
+        return -1;
+    }
+    
+    // Find all audio files
+    auto files = utils::find_audio_files(dir_path, recursive);
+    int total = static_cast<int>(files.size());
+    
+    // Filter out files that are already analyzed (check serially — fast DB lookup)
+    struct ScanJob {
+        std::filesystem::path path;
+        int64_t file_mtime;
+    };
+    std::vector<ScanJob> jobs;
+    int already_analyzed = 0;
+    
+    for (int i = 0; i < total; ++i) {
+        const auto& file = files[i];
+        std::string path_str = utils::path_to_absolute(file);
+        int64_t file_mtime = utils::file_modified_time(file);
+        
+        if (!store_->needs_analysis(path_str, file_mtime)) {
+            already_analyzed++;
+            if (callback) {
+                callback(path_str, i + 1, total);
+            }
+        } else {
+            jobs.push_back({file, file_mtime});
+        }
+    }
+    
+    if (jobs.empty()) {
+        store_->cleanup_missing_files();
+        return already_analyzed;
+    }
+    
+    // Multi-threaded scanning
+    unsigned int hw_threads = std::thread::hardware_concurrency();
+    unsigned int num_threads = std::max(1u, std::min(4u, hw_threads / 2));
+    num_threads = std::min(num_threads, static_cast<unsigned int>(jobs.size()));
+    
+    std::atomic<int> job_index{0};
+    std::atomic<int> processed_count{0};
+    std::atomic<int> progress_count{already_analyzed};
+    std::mutex callback_mutex;
+    
+    if (metadata_only) {
+        // Metadata-only: only get duration, no decode/analyze
+        auto worker = [&]() {
+            Decoder local_decoder;
+            while (true) {
+                int idx = job_index.fetch_add(1);
+                if (idx >= static_cast<int>(jobs.size())) break;
+                
+                const auto& job = jobs[idx];
+                std::string path_str = utils::path_to_absolute(job.path);
+                
+                float duration = local_decoder.get_duration(path_str);
+                if (duration < 0) {
+                    int p = progress_count.fetch_add(1) + 1;
+                    if (callback) {
+                        std::lock_guard<std::mutex> lock(callback_mutex);
+                        callback(path_str, p, total);
+                    }
+                    continue;
+                }
+                
+                {
+                    std::lock_guard<std::mutex> lock(store_->write_mutex());
+                    auto upsert_result = store_->upsert_track_path_duration(path_str, duration, job.file_mtime);
+                    if (upsert_result.ok()) {
+                        processed_count.fetch_add(1);
+                    }
+                }
+                
+                int p = progress_count.fetch_add(1) + 1;
+                if (callback) {
+                    std::lock_guard<std::mutex> lock(callback_mutex);
+                    callback(path_str, p, total);
+                }
+            }
+        };
+        
+        std::vector<std::thread> threads;
+        threads.reserve(num_threads);
+        for (unsigned int i = 0; i < num_threads; ++i) {
+            threads.emplace_back(worker);
+        }
+        for (auto& t : threads) {
+            t.join();
+        }
+    } else {
+        // Full analysis: decode + analyze
+        auto worker = [&]() {
+            Decoder local_decoder;
+            Analyzer local_analyzer;
+            
+            while (true) {
+                int idx = job_index.fetch_add(1);
+                if (idx >= static_cast<int>(jobs.size())) break;
+                
+                const auto& job = jobs[idx];
+                std::string path_str = utils::path_to_absolute(job.path);
+                
+                auto decode_result = local_decoder.decode_for_analysis(path_str);
+                if (decode_result.failed()) {
+                    int p = progress_count.fetch_add(1) + 1;
+                    if (callback) {
+                        std::lock_guard<std::mutex> lock(callback_mutex);
+                        callback(path_str, p, total);
+                    }
+                    continue;
+                }
+                
+                auto analyze_result = local_analyzer.analyze(decode_result.value());
+                if (analyze_result.failed()) {
+                    int p = progress_count.fetch_add(1) + 1;
+                    if (callback) {
+                        std::lock_guard<std::mutex> lock(callback_mutex);
+                        callback(path_str, p, total);
+                    }
+                    continue;
+                }
+                
+                TrackInfo track;
+                track.path = path_str;
+                track.bpm = analyze_result.value().bpm;
+                track.beats = analyze_result.value().beats;
+                track.key = analyze_result.value().key;
+                track.mfcc = analyze_result.value().mfcc;
+                track.chroma = analyze_result.value().chroma;
+                track.energy_curve = analyze_result.value().energy_curve;
+                track.duration = analyze_result.value().duration;
+                track.analyzed_at = utils::current_timestamp();
+                track.file_modified_at = job.file_mtime;
+                
+                {
+                    std::lock_guard<std::mutex> lock(store_->write_mutex());
+                    auto upsert_result = store_->upsert_track(track);
+                    if (upsert_result.ok()) {
+                        processed_count.fetch_add(1);
+                    }
+                }
+                
+                int p = progress_count.fetch_add(1) + 1;
+                if (callback) {
+                    std::lock_guard<std::mutex> lock(callback_mutex);
+                    callback(path_str, p, total);
+                }
+            }
+        };
+        
+        std::vector<std::thread> threads;
+        threads.reserve(num_threads);
+        for (unsigned int i = 0; i < num_threads; ++i) {
+            threads.emplace_back(worker);
+        }
+        for (auto& t : threads) {
+            t.join();
+        }
+    }
+    
+    store_->cleanup_missing_files();
+    return already_analyzed + processed_count.load();
+}
+
+int Engine::track_count() const {
+    return store_ ? store_->get_track_count() : 0;
+}
+
+std::optional<TrackInfo> Engine::get_track(int64_t id) {
+    return store_ ? store_->get_track(id) : std::nullopt;
+}
+
+std::vector<TrackInfo> Engine::search_tracks(const std::string& pattern) {
+    return store_ ? store_->search_tracks(pattern) : std::vector<TrackInfo>{};
+}
+
+std::vector<TrackInfo> Engine::get_all_tracks() {
+    return store_ ? store_->get_all_tracks() : std::vector<TrackInfo>{};
+}
+
+Playlist Engine::generate_playlist(
+    int64_t seed_track_id,
+    int count,
+    const PlaylistRules& rules
+) {
+    auto seed_opt = store_->get_track(seed_track_id);
+    if (!seed_opt) {
+        last_error_ = "Seed track not found";
+        return Playlist{};
+    }
+    
+    auto candidates = store_->get_all_tracks();
+    
+    return playlist_generator_->generate(
+        *seed_opt,
+        candidates,
+        count,
+        rules,
+        transition_config_
+    );
+}
+
+Playlist Engine::create_playlist(const std::vector<int64_t>& track_ids) {
+    std::vector<TrackInfo> tracks;
+    tracks.reserve(track_ids.size());
+    
+    for (int64_t id : track_ids) {
+        auto track_opt = store_->get_track(id);
+        if (track_opt) {
+            tracks.push_back(*track_opt);
+        }
+    }
+    
+    return playlist_generator_->create_with_transitions(tracks, transition_config_);
+}
+
+bool Engine::play(const Playlist& playlist) {
+    // Start audio first so we can decode tracks to the actual output sample rate.
+    if (!audio_output_->is_running()) {
+        start_audio();  // best-effort; playback can still run without platform output
+    }
+    
+    if (!scheduler_->load_playlist(playlist)) {
+        last_error_ = "Failed to load playlist";
+        return false;
+    }
+    
+    scheduler_->play();
+    
+    return true;
+}
+
+void Engine::pause() {
+    scheduler_->pause();
+}
+
+void Engine::resume() {
+    scheduler_->resume();
+}
+
+void Engine::stop() {
+    scheduler_->stop();
+    stop_audio();
+}
+
+bool Engine::skip() {
+    return scheduler_->skip();
+}
+
+bool Engine::previous() {
+    return scheduler_->previous();
+}
+
+bool Engine::seek(float position) {
+    return scheduler_->seek(position);
+}
+
+PlaybackState Engine::playback_state() const {
+    return scheduler_->state();
+}
+
+float Engine::playback_position() const {
+    return scheduler_->position();
+}
+
+int64_t Engine::current_track_id() const {
+    return scheduler_->current_track_id();
+}
+
+void Engine::set_status_callback(StatusCallback callback) {
+    scheduler_->set_status_callback(std::move(callback));
+}
+
+void Engine::set_transition_config(const TransitionConfig& config) {
+    transition_config_ = config;
+    scheduler_->set_transition_config(config);
+}
+
+int Engine::render(float* buffer, int frames) {
+    return scheduler_->render(buffer, frames, sample_rate_);
+}
+
+bool Engine::start_audio() {
+    bool ok = audio_output_->start();
+    if (ok) {
+        sample_rate_ = audio_output_->sample_rate();
+        scheduler_->set_sample_rate(sample_rate_);
+    }
+    return ok;
+}
+
+void Engine::stop_audio() {
+    audio_output_->stop();
+}
+
+bool Engine::is_audio_running() const {
+    return audio_output_->is_running();
+}
+
+void Engine::poll() {
+    scheduler_->poll();
+}
+
+Result<AudioBuffer> Engine::load_track_audio(int64_t track_id) {
+    auto track_opt = store_->get_track(track_id);
+    if (!track_opt) {
+        return "Track not found";
+    }
+    
+    return decoder_->decode(track_opt->path, sample_rate_);
+}
+
+} // namespace automix

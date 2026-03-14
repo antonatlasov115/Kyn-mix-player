@@ -1,0 +1,8 @@
+<Solution>
+  <Configurations>
+    <Platform Name="ARM64" />
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Project Path="peerify_core/peerify_core.vcxproj" Id="1637007e-1e41-4e0b-aeb3-503498876cd4" />
+</Solution>

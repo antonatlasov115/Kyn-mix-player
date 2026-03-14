@@ -1,0 +1,317 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg-deep: #03050a;
+  --bg-navy: #060a14;
+  --bg-navy-rgb: 6, 10, 20;
+  --bg-glass: rgba(6, 10, 20, 0.4);
+  --bg-app: #03050a;
+  --bg-app-rgb: 3, 5, 10;
+  --accent-primary: #00e5ff;
+  --accent-primary-rgb: 0, 229, 255;
+  --accent-primary-mid: rgba(0, 229, 255, 0.6);
+  --accent-primary-dim: rgba(0, 229, 255, 0.2);
+  --accent-secondary: #0088ff;
+  --accent-glow: rgba(0, 229, 255, 0.15);
+  --text-main: #ffffff;
+  --text-dim: #b8c5d6;
+  --border-glass: rgba(255, 255, 255, 0.1);
+}
+
+.theme-purple {
+  --bg-app: #0a0514;
+  --bg-app-rgb: 10, 5, 20;
+  --bg-navy: #140a1f;
+  --bg-navy-rgb: 20, 10, 31;
+  --accent-primary: #b900ff;
+  --accent-primary-rgb: 185, 0, 255;
+  --accent-primary-mid: rgba(185, 0, 255, 0.6);
+  --accent-primary-dim: rgba(185, 0, 255, 0.2);
+  --accent-secondary: #7000ff;
+  --accent-glow: rgba(185, 0, 255, 0.15);
+  --border-glass: rgba(185, 0, 255, 0.1);
+}
+
+.theme-gold {
+  --bg-app: #0f0a00;
+  --bg-app-rgb: 15, 10, 0;
+  --bg-navy: #1a140a;
+  --bg-navy-rgb: 26, 20, 10;
+  --accent-primary: #ffcc00;
+  --accent-primary-rgb: 255, 204, 0;
+  --accent-primary-mid: rgba(255, 204, 0, 0.6);
+  --accent-primary-dim: rgba(255, 204, 0, 0.2);
+  --accent-secondary: #ff8800;
+  --accent-glow: rgba(255, 204, 0, 0.15);
+  --border-glass: rgba(255, 204, 0, 0.1);
+}
+
+.theme-emerald {
+  --bg-app: #000f0a;
+  --bg-app-rgb: 0, 15, 10;
+  --bg-navy: #0a1f14;
+  --bg-navy-rgb: 10, 31, 20;
+  --accent-primary: #00ffaa;
+  --accent-primary-rgb: 0, 255, 170;
+  --accent-primary-mid: rgba(0, 255, 170, 0.6);
+  --accent-primary-dim: rgba(0, 255, 170, 0.2);
+  --accent-secondary: #00aa66;
+  --accent-glow: rgba(0, 255, 170, 0.15);
+  --border-glass: rgba(0, 255, 170, 0.1);
+}
+
+.theme-rose {
+  --bg-app: #0f0005;
+  --bg-app-rgb: 15, 0, 5;
+  --bg-navy: #1f0a14;
+  --bg-navy-rgb: 31, 10, 20;
+  --accent-primary: #ff0066;
+  --accent-primary-rgb: 255, 0, 102;
+  --accent-primary-mid: rgba(255, 0, 102, 0.6);
+  --accent-primary-dim: rgba(255, 0, 102, 0.2);
+  --accent-secondary: #ff00cc;
+  --accent-glow: rgba(255, 0, 102, 0.15);
+  --border-glass: rgba(255, 0, 102, 0.1);
+}
+
+.theme-blue {
+  --bg-app: #00050f;
+  --bg-app-rgb: 0, 5, 15;
+  --bg-navy: #0a0f1c;
+  --bg-navy-rgb: 10, 15, 28;
+  --accent-primary: #0088ff;
+  --accent-primary-rgb: 0, 136, 255;
+  --accent-primary-mid: rgba(0, 136, 255, 0.6);
+  --accent-primary-dim: rgba(0, 136, 255, 0.2);
+  --accent-secondary: #0055ff;
+  --accent-glow: rgba(0, 136, 255, 0.15);
+  --border-glass: rgba(0, 136, 255, 0.1);
+}
+
+.theme-kyinda {
+  --bg-app: #050a0a;
+  --bg-app-rgb: 5, 10, 10;
+  --bg-navy: #0a1414;
+  --bg-navy-rgb: 10, 20, 20;
+  --accent-primary: #e0f7fa;
+  --accent-primary-rgb: 224, 247, 250;
+  --accent-primary-mid: rgba(224, 247, 250, 0.6);
+  --accent-primary-dim: rgba(224, 247, 250, 0.2);
+  --accent-secondary: #b2ebf2;
+  --accent-glow: rgba(224, 247, 250, 0.15);
+  --border-glass: rgba(224, 247, 250, 0.1);
+}
+
+.theme-kytalyk {
+  --bg-app: #0f050a;
+  --bg-app-rgb: 15, 5, 10;
+  --bg-navy: #1f0a14;
+  --bg-navy-rgb: 31, 10, 20;
+  --accent-primary: #f8bbd0;
+  --accent-primary-rgb: 248, 187, 208;
+  --accent-primary-mid: rgba(248, 187, 208, 0.6);
+  --accent-primary-dim: rgba(248, 187, 208, 0.2);
+  --accent-secondary: #f48fb1;
+  --accent-glow: rgba(248, 187, 208, 0.15);
+  --border-glass: rgba(248, 187, 208, 0.1);
+}
+
+.theme-olonkho {
+  --bg-app: #140700;
+  --bg-app-rgb: 20, 7, 0;
+  --bg-navy: #2e0f00;
+  --bg-navy-rgb: 46, 15, 0;
+  --accent-primary: #ff6f00;
+  --accent-primary-rgb: 255, 111, 0;
+  --accent-primary-mid: rgba(255, 111, 0, 0.6);
+  --accent-primary-dim: rgba(255, 111, 0, 0.2);
+  --accent-secondary: #e65100;
+  --accent-glow: rgba(255, 111, 0, 0.15);
+  --border-glass: rgba(255, 111, 0, 0.1);
+}
+
+.theme-tuymaada {
+  --bg-app: #050f05;
+  --bg-app-rgb: 5, 15, 5;
+  --bg-navy: #0a1f0a;
+  --bg-navy-rgb: 10, 31, 10;
+  --accent-primary: #81c784;
+  --accent-primary-rgb: 129, 199, 132;
+  --accent-primary-mid: rgba(129, 199, 132, 0.6);
+  --accent-primary-dim: rgba(129, 199, 132, 0.2);
+  --accent-secondary: #4caf50;
+  --accent-glow: rgba(129, 199, 132, 0.15);
+  --border-glass: rgba(129, 199, 132, 0.1);
+}
+
+.theme-sardaana {
+  --bg-app: #140003;
+  --bg-app-rgb: 20, 0, 3;
+  --bg-navy: #2e0007;
+  --bg-navy-rgb: 46, 0, 7;
+  --accent-primary: #ff1744;
+  --accent-primary-rgb: 255, 23, 68;
+  --accent-primary-mid: rgba(255, 23, 68, 0.6);
+  --accent-primary-dim: rgba(255, 23, 68, 0.2);
+  --accent-secondary: #d50000;
+  --accent-glow: rgba(255, 23, 68, 0.15);
+  --border-glass: rgba(255, 23, 68, 0.1);
+}
+
+.theme-chyskhaan {
+  --bg-app: #000314;
+  --bg-app-rgb: 0, 3, 20;
+  --bg-navy: #00072e;
+  --bg-navy-rgb: 0, 7, 46;
+  --accent-primary: #1a237e;
+  --accent-primary-rgb: 26, 35, 126;
+  --accent-primary-mid: rgba(26, 35, 126, 0.6);
+  --accent-primary-dim: rgba(26, 35, 126, 0.2);
+  --accent-secondary: #0d47a1;
+  --accent-glow: rgba(26, 35, 126, 0.15);
+  --border-glass: rgba(26, 35, 126, 0.1);
+}
+
+.theme-kyinda_kharama {
+  --bg-app: #000000;
+  --bg-app-rgb: 0, 0, 0;
+  --bg-navy: #0a0a0a;
+  --bg-navy-rgb: 10, 10, 10;
+  --accent-primary: #00e5ff;
+  --accent-primary-rgb: 0, 229, 255;
+  --accent-primary-mid: rgba(0, 229, 255, 0.6);
+  --accent-primary-dim: rgba(0, 229, 255, 0.2);
+  --accent-secondary: #0088ff;
+  --accent-glow: rgba(0, 229, 255, 0.3);
+  --border-glass: rgba(255, 255, 255, 0.15);
+}
+
+.theme-grey {
+  --bg-app: #0d0d0d;
+  --bg-app-rgb: 13, 13, 13;
+  --bg-navy: #141414;
+  --bg-navy-rgb: 20, 20, 20;
+  --accent-primary: #777777;
+  --accent-primary-rgb: 119, 119, 119;
+  --accent-primary-mid: rgba(119, 119, 119, 0.6);
+  --accent-primary-dim: rgba(119, 119, 119, 0.2);
+  --accent-secondary: #444444;
+  --accent-glow: rgba(119, 119, 119, 0.1);
+  --border-glass: rgba(255, 255, 255, 0.05);
+}
+
+html,
+body,
+#app {
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: var(--bg-app);
+  color: #ffffff;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+  transition: background-color 1.5s cubic-bezier(0.23, 1, 0.32, 1);
+  position: relative;
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  opacity: 0.02;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.45' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+
+/* Premium Selection */
+::selection {
+  background: var(--accent-primary);
+  color: #000;
+}
+
+/* Glassmorphism Components */
+.glass-panel {
+  background: var(--bg-glass);
+  backdrop-filter: blur(40px) saturate(200%);
+  -webkit-backdrop-filter: blur(40px) saturate(200%);
+  transform: translateZ(0);
+  will-change: backdrop-filter;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow:
+    0 8px 32px -1px rgba(0, 0, 0, 0.4),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+}
+
+.glass-container {
+  background: rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(60px) saturate(180%);
+  -webkit-backdrop-filter: blur(60px) saturate(180%);
+  transform: translateZ(0);
+  will-change: backdrop-filter;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.glass-noise {
+  position: relative;
+}
+
+.glass-noise::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  opacity: 0.015;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.45' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+
+.glow-accent {
+  box-shadow: 0 0 30px var(--accent-glow), inset 0 0 15px rgba(255, 255, 255, 0.05);
+}
+
+.glow-accent-strong {
+  box-shadow: 0 0 50px var(--accent-glow), inset 0 0 20px rgba(255, 255, 255, 0.1);
+}
+
+/* Custom Scrollbar Premium */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 12px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 229, 255, 0.15);
+  background-clip: padding-box;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-premium-in {
+  animation: fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}

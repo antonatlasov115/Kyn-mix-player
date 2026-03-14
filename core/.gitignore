@@ -1,0 +1,23 @@
+# Visual Studio build artifacts
+x64/
+Debug/
+Release/
+*.user
+*.suo
+.vs/
+ipch/
+
+# Compiled binaries
+*.dll
+*.lib
+*.pdb
+*.exp
+*.obj
+
+# Build logs and state
+*.tlog
+*.lastbuildstate
+*.idb
+*.ilk
+*.iobj
+*.ipdb

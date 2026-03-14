@@ -1,0 +1,151 @@
+# Build directories
+cmake-build/
+cmake-build-*/
+.build/
+out/
+bin/
+lib/
+
+# Data files
+automix.db
+automix.db-journal
+automix.db-shm
+automix.db-wal
+automix_playlist.txt
+
+# const files
+keys.json
+.const
+
+# Audio files
+audio-files/
+*.wav
+*.mp3
+*.flac
+*.ogg
+*.aac
+*.m4a
+*.aiff
+*.dsd
+
+# Libraries
+*.a
+*.so
+*.so.*
+*.dylib
+*.dll
+*.lib
+
+# Object files
+*.o
+*.obj
+*.ko
+*.elf
+
+# Executables
+*.exe
+*.out
+*.app
+
+# CMake generated files
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+Makefile
+compile_commands.json
+install_manifest.txt
+CTestTestfile.cmake
+_deps/
+
+# IDE and Editor
+.idea/
+.vscode/
+*.xcodeproj/
+*.xcworkspace/
+*.swp
+*.swo
+*~
+.project
+.cproject
+.settings/
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Linux
+*~
+
+# Database files (SQLite)
+*.db
+*.db-journal
+*.db-shm
+*.db-wal
+*.sqlite
+*.sqlite3
+
+# Test output
+Testing/
+test_results/
+*.gcov
+*.gcda
+*.gcno
+coverage/
+coverage.info
+
+# Package managers
+vcpkg_installed/
+conan/
+conanbuildinfo.*
+conaninfo.txt
+graph_info.json
+
+# Logs
+*.log
+logs/
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+*.swp
+
+# Debug files
+*.dSYM/
+*.pdb
+*.ilk
+
+# Generated documentation
+docs/html/
+docs/latex/
+doxygen/
+
+# Audio test files (can be large)
+*.wav
+*.mp3
+*.flac
+*.ogg
+*.aac
+*.m4a
+!tests/fixtures/*.wav
+!tests/fixtures/*.mp3
+
+# Plans
+plans/
+
+# CodeQL internal files
+_codeql_detected_source_root
+
+# Preview script output
+transition_preview.wav
+temp_preview.db
+temp_preview.db-journal
+temp_preview.db-shm
+temp_preview.db-wal

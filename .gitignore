@@ -1,0 +1,35 @@
+# General
+.DS_Store
+.vscode/
+.idea/
+*.log
+*.tmp
+node_modules/
+
+# Engine (Core)
+/core/**/x64/
+/core/**/Debug/
+/core/**/Release/
+/core/**/*.user
+/core/**/*.suo
+/core/**/*.suo
+/core/**/.vs/
+/core/**/*.dll
+/core/**/*.lib
+/core/**/*.pdb
+/core/**/*.exp
+/core/**/*.obj
+/core/**/*.tlog
+/core/**/*.lastbuildstate
+/core/**/*.idb
+/core/**/*.ilk
+/core/**/*.iobj
+/core/**/*.ipdb
+
+# Frontend (UI)
+/ui/peerify/node_modules/
+/ui/peerify/dist/
+/ui/peerify/out/
+/ui/peerify/.env
+/ui/peerify/*.log*
+/ui/peerify/electron.vite.config.*.mjs

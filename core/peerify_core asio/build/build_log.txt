@@ -1,0 +1,7 @@
+╨Т╨╡╤А╤Б╨╕╤П MSBuild 18.3.0-release-26070-10+3972042b7 ╨┤╨╗╤П .NET Framework
+
+  dll_main.cpp
+  PeerifyAudio.cpp
+  ╨б╨╛╨╖╨┤╨░╨╜╨╕╨╡ ╨║╨╛╨┤╨░...
+C:\Users\anton\Desktop\peerify\core\peerify_core\peerify_core\PeerifyAudio.cpp(30,28): error C2065: ma_backend_asio: ╨╜╨╡╨╛╨▒╤К╤П╨▓╨╗╨╡╨╜╨╜╤Л╨╣ ╨╕╨┤╨╡╨╜╤В╨╕╤Д╨╕╨║╨░╤В╨╛╤А [C:\Users\anton\Desktop\peerify\core\peerify_core\build\peerify_core.vcxproj]
+C:\Users\anton\Desktop\peerify\core\peerify_core\peerify_core\PeerifyAudio.cpp(32,40): error C2070: "ma_backend []": ╨╜╨╡╨┐╤А╨░╨▓╨╕╨╗╤М╨╜╨╛ ╤Б╤Д╨╛╤А╨╝╨╕╤А╨╛╨▓╨░╨╜╨╜╤Л╨╣ ╨╛╨┐╨╡╤А╨░╨╜╨┤ sizeof [C:\Users\anton\Desktop\peerify\core\peerify_core\build\peerify_core.vcxproj]

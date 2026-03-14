@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="18.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="C:\Users\anton\Desktop\peerify\core\peerify_core asio\peerify_core\dll_main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\anton\Desktop\peerify\core\peerify_core asio\peerify_core\PeerifyAudio.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\anton\Desktop\peerify\core\peerify_core asio\peerify_core\PeerifyAnalyzer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\anton\Desktop\peerify\core\peerify_core asio\peerify_core\PeerifyBassEngine.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\anton\Desktop\peerify\core\peerify_core asio\peerify_core\miniaudio_impl.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\anton\Desktop\peerify\core\peerify_core asio\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{95F9A12E-9004-3150-BFE3-C81648B7102A}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

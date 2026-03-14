@@ -1,0 +1,3 @@
+C:/Users/anton/Desktop/peerify/core/peerify_core asio/build/CMakeFiles/peerify_core.dir
+C:/Users/anton/Desktop/peerify/core/peerify_core asio/build/CMakeFiles/ALL_BUILD.dir
+C:/Users/anton/Desktop/peerify/core/peerify_core asio/build/CMakeFiles/ZERO_CHECK.dir

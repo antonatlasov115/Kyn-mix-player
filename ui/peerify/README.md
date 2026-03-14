@@ -1,6 +1,6 @@
-# peerify
+# Kynmix 
 
-An Electron application with Svelte
+svelte ui to peerify core aka kynmix 
 
 ## Recommended IDE Setup
 
